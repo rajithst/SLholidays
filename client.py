@@ -2,4 +2,4 @@
 
 import slholidays
 
-res = slholidays.is_holiday()
+res = slholidays.is_holiday("2019-01-15")
