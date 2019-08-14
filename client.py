@@ -4,3 +4,4 @@ import slholidays
 import datetime
 
 h=slholidays.get_next_holiday("2019-5-1",include_weekends=True)
+hl = slholidays.holiday_name("2019-4-14")

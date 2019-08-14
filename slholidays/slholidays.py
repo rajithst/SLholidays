@@ -11,6 +11,14 @@ def is_public_holiday(date):
     else:
         return False
     
+def holiday_name(date):
+    
+    if is_public_holiday(date):
+        if isinstance(date,datetime.datetime) is False:
+            date = __parse_string_to_obj(date)
+        return holidays_dict.get(__parse_obj_to_string(date))
+        
+        
 def get_next_holiday(date=None,include_weekends=False):
     
     if date is None:
