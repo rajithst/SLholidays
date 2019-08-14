@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import slholidays
+import datetime
 
-res = slholidays.is_public_holiday("2019-01-16")
-n = slholidays.get_next_holiday("2019-01-16")
+h=slholidays.get_next_holiday("2019-5-1",include_weekends=True)
