@@ -1,2 +1,2 @@
-# SLholidays
-Python Library for manage Sri Lankan holidays
+# SLholidays (SimpLe Holidays)
+Python Library for manage Holidays
