@@ -1,2 +1,2 @@
 #
-from .slholidays import slholidays
+from .slholidays import *

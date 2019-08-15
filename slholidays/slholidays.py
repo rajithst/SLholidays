@@ -1,11 +1,13 @@
 import datetime
 
-holidays_dict = None
-
 def load_holidays(holidays):
+    global holidays_dict 
     holidays_dict = holidays
     return holidays_dict
 
+def get_all_holidays():
+    if holidays_dict is not None:
+        return holidays_dict
 
 def is_public_holiday(date):
     inp =  __parse_string_to_obj(date)
@@ -49,8 +51,30 @@ def get_next_holiday(date=None,include_weekends=False):
     return next_holiday
                           
     
-def get_previous_holiday(date=datetime.datetime.today(),include_weekends=False):
-    pass
+def get_previous_holiday(date=None,include_weekends=False):
+    
+    if date is None:
+        date = datetime.datetime.today()
+    else:
+        if isinstance(date,datetime.datetime) is False:
+            date = __parse_string_to_obj(date)
+      
+    last_holiday = __next_or_prev_holiday_from_list(date,False)
+    
+    if include_weekends:
+            day_number = date.weekday()
+            if day_number < 5:
+                for_last_weekend = 5-day_number
+                last_weekend = date - datetime.timedelta(days=for_last_weekend)
+            if day_number == 5:
+                last_weekend = date - datetime.timedelta(days=6)
+            if day_number==6:
+                last_weekend = date - datetime.timedelta(days=1)
+            
+            if last_holiday < last_weekend:
+                last_holiday = last_weekend
+    
+    return last_holiday
     
 
 def __next_or_prev_holiday_from_list(date,next_h):

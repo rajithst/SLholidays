@@ -3,6 +3,7 @@
 import slholidays
 import datetime
 from slholidays.data import seed
+print(slholidays.holidays_dict)
 
 slh = seed.load_sl_public_holidays()
 
@@ -32,5 +33,8 @@ data = {'2019-01-15': 'Tamil Thai Pongal Day ',
      '2019-12-25': 'Christmas Day '}
 
 slholidays.load_holidays(data)
-h=slholidays.get_next_holiday("2019-5-1",include_weekends=True)
+allh = slholidays.get_all_holidays()
+h=slholidays.get_next_holiday("2019-5-1",include_weekends=False)
 hl = slholidays.holiday_name("2019-4-14")
+h2 = slholidays.is_public_holiday("2019-5-1")
+r1 = slholidays.get_previous_holiday("2019-5-1",include_weekends=False)
