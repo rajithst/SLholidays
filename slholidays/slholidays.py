@@ -27,12 +27,7 @@ def holiday_name(date):
         
 def get_next_holiday(date=None,include_weekends=False):
     
-    if date is None:
-        date = datetime.datetime.today()
-    else:
-        if isinstance(date,datetime.datetime) is False:
-            date = __parse_string_to_obj(date)
-      
+    date = __date_clean_or_today(date)  
     next_holiday = __next_or_prev_holiday_from_list(date,True)
     
     if include_weekends:
@@ -49,16 +44,20 @@ def get_next_holiday(date=None,include_weekends=False):
                 next_holiday = next_weekend
     
     return next_holiday
-                          
+
+def number_of_days_to_next_holiday(date,include_weekends=False):
+    
+    date = __date_clean_or_today(date)
+    next_holiday = get_next_holiday(date,include_weekends)
+    diff = next_holiday - date
+    return diff.days
+
+
     
 def get_previous_holiday(date=None,include_weekends=False):
     
-    if date is None:
-        date = datetime.datetime.today()
-    else:
-        if isinstance(date,datetime.datetime) is False:
-            date = __parse_string_to_obj(date)
-      
+    date = __date_clean_or_today(date)
+    
     last_holiday = __next_or_prev_holiday_from_list(date,False)
     
     if include_weekends:
@@ -77,6 +76,13 @@ def get_previous_holiday(date=None,include_weekends=False):
     return last_holiday
     
 
+def number_of_days_to_previous_holiday(date,include_weekends=False):
+    
+    date = __date_clean_or_today(date)
+    last_holiday = get_previous_holiday(date,include_weekends)
+    diff = date -last_holiday
+    return diff.days
+
 def __next_or_prev_holiday_from_list(date,next_h):
     
     holiday_list_objects = __get_dates_as_obj()
@@ -94,6 +100,15 @@ def __next_or_prev_holiday_from_list(date,next_h):
             next_dates = [ (d) for d in holiday_list_objects if d < date]
             return next_dates[len(next_dates)-1]
     
+def __date_clean_or_today(date):
+    
+    if date is None:
+        date = datetime.datetime.today()
+    else:
+        if isinstance(date,datetime.datetime) is False:
+            date = __parse_string_to_obj(date)
+    return date
+
 def __parse_obj_to_string(date):
     return datetime.datetime.strftime(date,"%Y-%m-%d")
 
