@@ -1,8 +1,12 @@
 import datetime
-from slholidays.data import seed
 
-holidays_dict = seed.load_holidays()
-    
+holidays_dict = None
+
+def load_holidays(holidays):
+    holidays_dict = holidays
+    return holidays_dict
+
+
 def is_public_holiday(date):
     inp =  __parse_string_to_obj(date)
     date_s = __parse_obj_to_string(inp)
@@ -12,7 +16,7 @@ def is_public_holiday(date):
         return False
     
 def holiday_name(date):
-    
+     
     if is_public_holiday(date):
         if isinstance(date,datetime.datetime) is False:
             date = __parse_string_to_obj(date)
