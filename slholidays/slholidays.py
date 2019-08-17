@@ -87,6 +87,21 @@ def number_of_days_to_previous_holiday(date,include_weekends=False):
     diff = date -last_holiday
     return diff.days
 
+def number_of_days_between(from_date,to_date,include_weekends=True):
+
+    f_date = __date_clean_or_today(from_date)
+    t_date = __date_clean_or_today(to_date)
+    num = f_date - t_date
+    number_of_days = abs(num.days) 
+    if include_weekends is False:
+        all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1,number_of_days+1)]
+        clean_dates=[]
+        for d in all_dates_between:
+            if (d.weekday()!=5 and d.weekday()!=6):
+                clean_dates.append(d)
+        number_of_days = len(clean_dates)
+    return number_of_days
+                
 def __next_or_prev_holiday_from_list(date,next_h):
     
     holiday_list_objects = __get_dates_as_obj()
