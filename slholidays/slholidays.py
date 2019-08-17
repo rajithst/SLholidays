@@ -17,6 +17,10 @@ def is_public_holiday(date):
     else:
         return False
     
+def get_the_day(date):
+    date = __date_clean_or_today(date)
+    return date.strftime("%A")
+    
 def holiday_name(date):
      
     if is_public_holiday(date):
