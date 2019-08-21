@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 import csv
-
-def main():
-    pass
-    #load_holidays()
-        
+    
 def load_sl_public_holidays():
     with open("slholidays/data/public_holidays.csv") as csv_file:
         csv_reader = csv.reader(csv_file,delimiter=',')
@@ -19,8 +15,3 @@ def load_sl_public_holidays():
     
         return dict(zip(hol_dates,hol_names))
     
-
-
-
-if __name__ == "__main__":
-    main()
