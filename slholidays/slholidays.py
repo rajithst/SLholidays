@@ -6,8 +6,10 @@ def load_holidays(holidays):
     return holidays_dict
 
 def get_all_holidays():
+    
     if holidays_dict is not None:
         return holidays_dict
+    
 
 def is_public_holiday(date):
     inp =  __parse_string_to_obj(date)
@@ -20,15 +22,35 @@ def is_public_holiday(date):
 def get_the_day(date):
     date = __date_clean_or_today(date)
     return date.strftime("%A")
-    
+
 def holiday_name(date):
      
     if is_public_holiday(date):
         if isinstance(date,datetime.datetime) is False:
             date = __parse_string_to_obj(date)
         return holidays_dict.get(__parse_obj_to_string(date))
-        
-        
+
+def year_holidays(year,include_weekends=True):
+    
+    date = datetime.date(year,1,1)
+    all_holidays = __get_dates_as_obj()
+    year_holidays = []
+    for d in all_holidays:
+        if d.year==date.year:
+            year_holidays.append(d)
+    return year_holidays
+
+def month_holidays(year,month):
+    date = datetime.date(year,month,1)
+    if year is not None:
+        year_hols = year_holidays(year)
+        month_holidays=[]
+        for d in year_hols:
+            if d.month == date.month:
+                month_holidays.append(d)
+        return month_holidays
+    
+
 def get_next_holiday(date=None,include_weekends=False):
     
     date = __date_clean_or_today(date)  

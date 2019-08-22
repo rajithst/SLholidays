@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import slholidays
+from slholidays import slholidays
 from slholidays.data import seed
 slh = seed.load_sl_public_holidays() 
+other = {"2018-04-14":"abc","2018-05-01":"abd"}
+dt = dict(slh,**other)
 
-slholidays.load_holidays(slh)
 
+slholidays.load_holidays(dt)
+yh = slholidays.year_holidays(2018)
+mh=slholidays.month_holidays(2019,6)
 allh = slholidays.get_all_holidays()
 h=slholidays.get_next_holiday("2019-5-1",include_weekends=False)
 r1 = slholidays.get_previous_holiday("2019-5-1",include_weekends=False)

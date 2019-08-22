@@ -10,5 +10,7 @@ setup(name='SLholidays',
       packages=['SLholidays'],
       zip_safe=False,
       install_requires=[],
+      test_suite='nose.collector',
+      tests_require=['nose'],
       include_package_data=True
       )
