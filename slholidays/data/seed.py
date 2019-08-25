@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import csv
+from os.path import join,dirname
     
 def load_sl_public_holidays():
-    with open("slholidays/data/public_holidays.csv") as csv_file:
+    module_path = dirname('__file__')
+    with open('slholidays/data/public_holidays.csv') as csv_file:
         csv_reader = csv.reader(csv_file,delimiter=',')
         line_counter = 0
         hol_names = []

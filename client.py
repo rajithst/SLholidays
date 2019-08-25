@@ -6,9 +6,13 @@ slh = seed.load_sl_public_holidays()
 other = {"2018-04-14":"abc","2018-05-01":"abd"}
 dt = dict(slh,**other)
 
+api = slholidays.holidays(dt)
 
+allh=api.get_all_holidays()
+wk = api.get_weekends_between("2019-08-01","2019-09-01")
 slholidays.load_holidays(dt)
-yh = slholidays.year_holidays(2018)
+
+yh = api.year_holidays(2019,include_weekends=True)
 mh=slholidays.month_holidays(2019,6)
 allh = slholidays.get_all_holidays()
 h=slholidays.get_next_holiday("2019-5-1",include_weekends=False)
