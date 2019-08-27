@@ -56,7 +56,7 @@ class holidays:
     def month_holidays(self,year,month,include_weekends=False):
         date = datetime.date(year,month,1)
         if year is not None:
-            year_hols = self.year_holidays(year)
+            year_hols = self.year_holidays(year,include_weekends)
             month_holidays=[]
             for d in year_hols:
                 if d.month == date.month:
