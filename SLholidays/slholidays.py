@@ -25,6 +25,13 @@ class holidays:
         else:
             return False
         
+    def is_weekend(self,date):
+        date = self.__date_clean_or_today(date)
+        if date.weekday()== 5 or date.weekday()==6:
+            return True
+        else:
+            return False
+        
     def get_the_day(self,date):
         date = self.__date_clean_or_today(date)
         return date.strftime("%A")
