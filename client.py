@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from slholidays import slholidays
-from slholidays.data import seed
+from SLholidays import slholidays
+from SLholidays.data import seed
 slh = seed.load_sl_public_holidays() 
 other = {"2018-04-14":"abc","2018-05-01":"abd"}
 dt = dict(slh,**other)
