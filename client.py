@@ -6,7 +6,9 @@ slh = seed.load_sl_public_holidays()
 other = {"2018-04-14":"abc","2018-05-01":"abd"}
 dt = dict(slh,**other)
 
-api = slholidays.holidays(dt)
+import pandas as pd
+
+api = slholidays.holidays()
 
 allh=api.get_all_holidays()
 wk = api.get_weekends_between("2019-08-01","2019-09-01")
@@ -25,3 +27,6 @@ r3 = slholidays.number_of_days_to_previous_holiday("2019-5-1",include_weekends=T
 alldays = slholidays.all_days_between("2019-01-15","2019-04-14",include_weekends=False)
 d = slholidays.get_the_day("2019-04-14")
 nm = slholidays.number_of_days_between("2019-01-15","2019-04-14",include_weekends=True)
+
+
+pd.read_csv()

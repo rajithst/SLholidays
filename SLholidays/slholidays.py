@@ -4,14 +4,21 @@ from SLholidays.dateutility import util_dates as util
 
 class holidays(date_mount):
     
-    def __init__(self,data,sort_dates=False):        
-        self.holidays_dict= data
-        self.sort_dates = sort_dates
+    __DATA_VALUE_ERROR = "Holidays data is not defined."
+    
+    def __init__(self,data=None,sort_dates=False):
+        if data is None:
+            raise ValueError(self.__DATA_VALUE_ERROR)
+        else:    
+            self.holidays_dict= data
+            self.sort_dates = sort_dates
     
     def get_all_holidays(self):
         
         if self.holidays_dict is not None:
             return self.holidays_dict
+        else:
+            raise ValueError(self.__DATA_VALUE_ERROR)
         
     
     def is_holiday(self,date):
@@ -66,7 +73,7 @@ class holidays(date_mount):
     def get_next_holiday(self,date=None,include_weekends=False):
         
         date = util.date_clean_or_today(date)  
-        next_holiday = self.__next_or_prev_holiday_from_list(date,True)
+        next_holiday = self.__next_or_prev_holiday_from_list(date,next_h=True)
         
         if include_weekends:
                 day_number = date.weekday()

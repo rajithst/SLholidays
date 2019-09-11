@@ -1,9 +1,21 @@
 # -*- coding: utf-8 -*-
 import datetime
+import calendar
 from SLholidays.dateutility import util_dates as util
 
 class date_mount:
-        
+    
+    def get_the_day(self,date):
+        date = util.date_clean_or_today(date)
+        return date.strftime("%A")
+    
+    def is_weekend(self,date):
+         date = util.date_clean_or_today(date)
+         if date.weekday()== 5 or date.weekday()==6:
+             return True
+         else:
+            return False
+
     def number_of_days_between(self,from_date,to_date,include_weekends=True):
         
         number_of_days = len(self.all_days_between(from_date,to_date,include_weekends)) 
@@ -36,14 +48,39 @@ class date_mount:
             all_dates_between = clean_dates
         return all_dates_between
     
-    def is_weekend(self,date):
-         date = util.date_clean_or_today(date)
-         if date.weekday()== 5 or date.weekday()==6:
-             return True
-         else:
-            return False
+    def days_of_week(self,date,include_weekends=True):
         
+        if isinstance(date,datetime.datetime) is False:
+            date = util.parse_string_to_obj(date)
         
-    def get_the_day(self,date):
-        date = util.date_clean_or_today(date)
-        return date.strftime("%A")
+        start_date = datetime.datetime(date.year,date.month,1)
+        ndays = calendar.monthrange(date.year,date.month)[1]
+        end_date = datetime.datetime(date.year,date.month,ndays)
+        return self.all_days_between(start_date,end_date,include_weekends)
+
+    
+    def days_of_month(self,date,include_weekends=True):
+        date = "2018-02-21"
+        if isinstance(date,datetime.datetime) is False:
+            date = util.parse_string_to_obj(date)
+        
+        start_date = datetime.datetime(date.year,date.month,1)
+        ndays = calendar.monthrange(date.year,date.month)[1]
+        end_date = datetime.datetime(date.year,date.month,ndays)
+        return self.all_days_between(start_date,end_date,include_weekends)
+            
+        
+    
+    def days_of_year(self,date,include_weekends=True):
+        
+        if isinstance(date,datetime.datetime) is False:
+            date = util.parse_string_to_obj(date)
+        
+        start_date = datetime.datetime(date.year,1,1)
+        end_date = datetime.datetime(date.year,12,31)
+        return self.all_days_between(start_date,end_date,include_weekends)
+        
+    
+            
+        
+  

@@ -18,7 +18,7 @@ class util_dates:
         return datetime.datetime.strftime(date,"%Y-%m-%d")
     
     
-    def parse_string_to_obj(self,date):
+    def parse_string_to_obj(date):
         return datetime.datetime.strptime(date,"%Y-%m-%d")
     
     
