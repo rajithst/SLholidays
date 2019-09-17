@@ -2,16 +2,21 @@ import datetime
 from SLholidays.datemount import date_mount
 from SLholidays.dateutility import util_dates as util
 
-class holidays(date_mount):
+class holidays:
     
     __DATA_VALUE_ERROR = "Holidays data is not defined."
+    __DICT_TYPE_ERROR = "Data must be dictionary format"
     
     def __init__(self,data=None,sort_dates=False):
+        
         if data is None:
             raise ValueError(self.__DATA_VALUE_ERROR)
-        else:    
-            self.holidays_dict= data
-            self.sort_dates = sort_dates
+        else:
+            if isinstance(data,dict):
+                self.holidays_dict= data
+                self.sort_dates = sort_dates
+            else:
+                raise TypeError(self.__DICT_TYPE_ERROR)
     
     def get_all_holidays(self):
         
@@ -23,8 +28,8 @@ class holidays(date_mount):
     
     def is_holiday(self,date):
         
-        inp =  util.parse_string_to_obj(date)
-        date_s = util.parse_obj_to_string(inp)
+        inp =  util._validate_dtype(date)
+        
         if date_s in self.holidays_dict.keys():
             return True
         else:
