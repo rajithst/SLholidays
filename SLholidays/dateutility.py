@@ -5,8 +5,11 @@ class util_dates:
     
     today = datetime.datetime.today()
         
-    def _validate_dtype(self,date,dtype=datetime.datetime):
+    def _validate_dtype(self,dtype,*argv):
         
+        for arg in argv:
+            print("another arg through *argv:", arg)
+        return
         if date is None:
             date = self.today
         else:

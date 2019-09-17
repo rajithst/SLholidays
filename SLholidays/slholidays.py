@@ -2,6 +2,10 @@ import datetime
 from SLholidays.datemount import date_mount
 from SLholidays.dateutility import util_dates as util
 
+import numpy as np
+data = np.random.random((1000, 100))
+labels = np.random.randint(2, size=(1000, 1))
+
 class holidays:
     
     __DATA_VALUE_ERROR = "Holidays data is not defined."
@@ -27,10 +31,10 @@ class holidays:
         
     
     def is_holiday(self,date):
-        
-        inp =  util._validate_dtype(date)
-        
-        if date_s in self.holidays_dict.keys():
+        date = "2018-01-01"
+        dates = "2018-01-02"
+        inp =  util._validate_dtype(datetime.datetime,date,dates)
+        if inp in self.holidays_dict.keys():
             return True
         else:
             return False
@@ -40,9 +44,11 @@ class holidays:
          
         if self.is_holiday(date):
             if isinstance(date,datetime.datetime) is False:
-                date = util.parse_string_to_obj(date)
-            return self.holidays_dict.get(util.parse_obj_to_string(date))
-    
+                date = util._validate_dtype(date,str)
+            return self.holidays_dict.get(date)
+        else:
+            return False
+        
     def year_holidays(self,year,include_weekends=False):
         
         date = datetime.datetime(year,1,1)
