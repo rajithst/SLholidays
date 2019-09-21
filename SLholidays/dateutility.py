@@ -2,7 +2,7 @@
 import datetime
 
         
-def _validate_dtype(dtype=str,date):
+def _validate_dtype(date,dtype=str):
     
     if isinstance(date,datetime.datetime) is False:
         if isinstance(dtype,str):

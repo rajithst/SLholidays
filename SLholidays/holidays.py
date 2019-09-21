@@ -28,7 +28,7 @@ class holidays:
         if date is None:
             raise ValueError(exp._arg_missing)
         else:    
-            inp =  util._validate_dtype(str,date)
+            inp =  util._validate_dtype(date)
             
         if inp in self.holidays_dict.keys():
             return True
@@ -39,7 +39,7 @@ class holidays:
     def holiday_name(self,date):
          
         if self.is_holiday(date):
-            date = util._validate_dtype(str,date)
+            date = util._validate_dtype(date)
             return self.holidays_dict.get(date)
         else:
             return False

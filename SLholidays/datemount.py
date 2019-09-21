@@ -49,12 +49,9 @@ class date_mount:
         return all_dates_between
     
     def days_of_week(self,date,include_weekends=True):
-        
-        date = util._validate_dtype(str,date)
-        start_date = datetime.datetime(date.year,date.month,1)
-        ndays = calendar.monthrange(date.year,date.month)[1]
-        end_date = datetime.datetime(date.year,date.month,ndays)
-        return self.all_days_between(start_date,end_date,include_weekends)
+        date = "2019-02-20"
+        date = util._validate_dtype(date)
+        daynumber = date.weekday()
 
     
     def days_of_month(self,date,include_weekends=True):
