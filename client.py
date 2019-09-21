@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from SLholidays import slholidays
+from SLholidays.holidays import holidays
+from SLholidays.datemount import date_mount
 from SLholidays.data import seed
 slh = seed.load_sl_public_holidays() 
 other = {"2018-04-14":"abc","2018-05-01":"abd"}
 dt = dict(slh,**other)
 
-import pandas as pd
 
-api = slholidays.holidays()
+api = holidays(dt)
+api2 = date_mount()
+api.is_holiday("2019-01-20")
+
 
 allh=api.get_all_holidays()
 wk = api.get_weekends_between("2019-08-01","2019-09-01")

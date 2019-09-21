@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 import datetime
 import calendar
-from SLholidays.dateutility import util_dates as util
+import SLholidays.dateutility  as util
 
 class date_mount:
     
     def get_the_day(self,date):
-        date = util.date_clean_or_today(date)
+        date = util._validate_dtype(date=date)  
         return date.strftime("%A")
     
     def is_weekend(self,date):
-         date = util.date_clean_or_today(date)
+         date = util._validate_dtype(date=date)  
          if date.weekday()== 5 or date.weekday()==6:
              return True
          else:
@@ -23,8 +23,8 @@ class date_mount:
     
     def get_weekends_between(self,from_date,to_date):
         
-        f_date = util.date_clean_or_today(from_date)
-        t_date = util.date_clean_or_today(to_date)
+        f_date = util._validate_dtype(date=from_date)
+        t_date = util._validate_dtype(date=to_date)
         num = f_date - t_date
         number_of_days = abs(num.days) 
         all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1,number_of_days+1)]
@@ -35,8 +35,8 @@ class date_mount:
     def all_days_between(self,from_date,to_date,include_weekends=True):
         
         
-        f_date = util.date_clean_or_today(from_date)
-        t_date = util.date_clean_or_today(to_date)
+        f_date = util._validate_dtype (date=from_date)
+        t_date = util._validate_dtype (date=to_date)
         num = f_date - t_date
         number_of_days = abs(num.days) 
         all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1,number_of_days+1)]
@@ -50,9 +50,7 @@ class date_mount:
     
     def days_of_week(self,date,include_weekends=True):
         
-        if isinstance(date,datetime.datetime) is False:
-            date = util.parse_string_to_obj(date)
-        
+        date = util._validate_dtype(str,date)
         start_date = datetime.datetime(date.year,date.month,1)
         ndays = calendar.monthrange(date.year,date.month)[1]
         end_date = datetime.datetime(date.year,date.month,ndays)
@@ -60,10 +58,7 @@ class date_mount:
 
     
     def days_of_month(self,date,include_weekends=True):
-        date = "2018-02-21"
-        if isinstance(date,datetime.datetime) is False:
-            date = util.parse_string_to_obj(date)
-        
+        date = util._validate_dtype(str,date)
         start_date = datetime.datetime(date.year,date.month,1)
         ndays = calendar.monthrange(date.year,date.month)[1]
         end_date = datetime.datetime(date.year,date.month,ndays)
@@ -73,9 +68,7 @@ class date_mount:
     
     def days_of_year(self,date,include_weekends=True):
         
-        if isinstance(date,datetime.datetime) is False:
-            date = util.parse_string_to_obj(date)
-        
+        date = util._validate_dtype(str,date)
         start_date = datetime.datetime(date.year,1,1)
         end_date = datetime.datetime(date.year,12,31)
         return self.all_days_between(start_date,end_date,include_weekends)

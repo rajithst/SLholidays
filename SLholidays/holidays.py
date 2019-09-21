@@ -1,39 +1,35 @@
 import datetime
+import SLholidays.dateutility as util
+import  SLholidays.exception as exp
 from SLholidays.datemount import date_mount
-from SLholidays.dateutility import util_dates as util
-
-import numpy as np
-data = np.random.random((1000, 100))
-labels = np.random.randint(2, size=(1000, 1))
 
 class holidays:
     
-    __DATA_VALUE_ERROR = "Holidays data is not defined."
-    __DICT_TYPE_ERROR = "Data must be dictionary format"
-    
-    def __init__(self,data=None,sort_dates=False):
+    def __init__(self,data):
         
         if data is None:
-            raise ValueError(self.__DATA_VALUE_ERROR)
+            raise ValueError(exp._arg_missing)
         else:
             if isinstance(data,dict):
                 self.holidays_dict= data
-                self.sort_dates = sort_dates
             else:
-                raise TypeError(self.__DICT_TYPE_ERROR)
+                raise TypeError(exp._data_type_error)
     
     def get_all_holidays(self):
         
         if self.holidays_dict is not None:
             return self.holidays_dict
         else:
-            raise ValueError(self.__DATA_VALUE_ERROR)
+            raise ValueError(exp._data_type_error)
         
     
     def is_holiday(self,date):
-        date = "2018-01-01"
-        dates = "2018-01-02"
-        inp =  util._validate_dtype(datetime.datetime,date,dates)
+        
+        if date is None:
+            raise ValueError(exp._arg_missing)
+        else:    
+            inp =  util._validate_dtype(str,date)
+            
         if inp in self.holidays_dict.keys():
             return True
         else:
@@ -43,8 +39,7 @@ class holidays:
     def holiday_name(self,date):
          
         if self.is_holiday(date):
-            if isinstance(date,datetime.datetime) is False:
-                date = util._validate_dtype(date,str)
+            date = util._validate_dtype(str,date)
             return self.holidays_dict.get(date)
         else:
             return False
@@ -52,7 +47,7 @@ class holidays:
     def year_holidays(self,year,include_weekends=False):
         
         date = datetime.datetime(year,1,1)
-        all_holidays = util.get_dates_as_obj()
+        all_holidays = self.__get_dates_as_obj()
         if include_weekends is True:
             year_end = datetime.datetime(year,12,31)
             year_weekends = date_mount.get_weekends_between(date,year_end)
@@ -83,7 +78,7 @@ class holidays:
     
     def get_next_holiday(self,date=None,include_weekends=False):
         
-        date = util.date_clean_or_today(date)  
+        date = util._validate_dtype(date=date)  
         next_holiday = self.__next_or_prev_holiday_from_list(date,next_h=True)
         
         if include_weekends:
@@ -125,7 +120,7 @@ class holidays:
     
     def number_of_days_to_next_holiday(self,date,include_weekends=False):
         
-        date = util.date_clean_or_today(date)
+        date = util._validate_dtype(date=date)
         next_holiday = self.get_next_holiday(date,include_weekends)
         diff = next_holiday - date
         return diff.days
@@ -133,7 +128,7 @@ class holidays:
     
     def number_of_days_to_previous_holiday(self,date,include_weekends=False):
         
-        date = util.date_clean_or_today(date)
+        date = util._validate_dtype(date=date)
         last_holiday = self.get_previous_holiday(date,include_weekends)
         diff = date -last_holiday
         return diff.days
@@ -158,7 +153,5 @@ class holidays:
     
     def __get_dates_as_obj(self):
         h_list = self.holidays_dict.keys()
-        dates = [ self.__parse_string_to_obj(x) for x in h_list ]
-        if self.sort_dates:
-            dates = sorted(dates)
-        return dates
+        dates = [ util._validate_dtype(date=x) for x in h_list ]
+        return sorted(dates)
