@@ -23,11 +23,7 @@ class date_mount:
     
     def get_weekends_between(self,from_date,to_date):
         
-        f_date = util._validate_dtype(date=from_date)
-        t_date = util._validate_dtype(date=to_date)
-        num = f_date - t_date
-        number_of_days = abs(num.days) 
-        all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1,number_of_days+1)]
+        all_dates_between = self.all_days_between(from_date,to_date)
         weekends = [(d) for d in all_dates_between if self.is_weekend(d)]
         return weekends
     
@@ -35,8 +31,8 @@ class date_mount:
     def all_days_between(self,from_date,to_date,include_weekends=True):
         
         
-        f_date = util._validate_dtype (date=from_date)
-        t_date = util._validate_dtype (date=to_date)
+        f_date = util._validate_dtype(date=from_date)
+        t_date = util._validate_dtype(date=to_date)
         num = f_date - t_date
         number_of_days = abs(num.days) 
         all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1,number_of_days+1)]
@@ -49,10 +45,13 @@ class date_mount:
         return all_dates_between
     
     def days_of_week(self,date,include_weekends=True):
-        date = "2019-02-20"
+        
         date = util._validate_dtype(date)
         daynumber = date.weekday()
-
+        weekstart = date - datetime.timedelta(daynumber)
+        weekend = date + datetime.timedelta(6-daynumber)
+        return self.all_days_between(weekstart,weekend,include_weekends)
+        
     
     def days_of_month(self,date,include_weekends=True):
         date = util._validate_dtype(str,date)

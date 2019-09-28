@@ -12,6 +12,7 @@ class holidays:
         else:
             if isinstance(data,dict):
                 self.holidays_dict= data
+                self.date_mount = date_mount()
             else:
                 raise TypeError(exp._data_type_error)
     
@@ -27,10 +28,11 @@ class holidays:
         
         if date is None:
             raise ValueError(exp._arg_missing)
-        else:    
-            inp =  util._validate_dtype(date)
+        else:   
+            if isinstance(date,datetime.datetime):
+                date =  util._parse_obj_to_string(date)
             
-        if inp in self.holidays_dict.keys():
+        if date in self.holidays_dict.keys():
             return True
         else:
             return False
@@ -50,7 +52,7 @@ class holidays:
         all_holidays = self.__get_dates_as_obj()
         if include_weekends is True:
             year_end = datetime.datetime(year,12,31)
-            year_weekends = date_mount.get_weekends_between(date,year_end)
+            year_weekends = self.date_mount.get_weekends_between(date,year_end)
             f = set(year_weekends)
             s = set(all_holidays)
             all_holidays = sorted(f.union(s))
@@ -71,10 +73,16 @@ class holidays:
                     month_holidays.append(d)
             return month_holidays
         
-    def week_holidays(self,date):
-        pass
-        
-        
+    def week_holidays(self,date,include_weekends=False):
+        date = util._validate_dtype(date)
+        weekdays = self.date_mount.days_of_week(date=date)
+        month_holidays = self.month_holidays(date.year,date.month,include_weekends)
+        week_holidays = []
+        for weekday in weekdays:
+            for holiday in month_holidays:
+                if holiday == weekday:
+                    week_holidays.append(holiday)
+        return week_holidays
     
     def get_next_holiday(self,date=None,include_weekends=False):
         
