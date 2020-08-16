@@ -6,17 +6,6 @@ import SLholidays.dateutility  as util
 
 class Days:
 
-    def get_the_day(self, date):
-        date = util.validate_dtype(date=date)
-        return date.strftime("%A")
-
-    def is_weekend(self, date):
-        date = util.validate_dtype(date=date)
-        if date.weekday() == 5 or date.weekday() == 6:
-            return True
-        else:
-            return False
-
     def number_of_days_between(self, from_date, to_date, include_weekends=True):
 
         number_of_days = len(self.all_days_between(from_date, to_date, include_weekends))
@@ -27,21 +16,6 @@ class Days:
         all_dates_between = self.all_days_between(from_date, to_date)
         weekends = [(d) for d in all_dates_between if self.is_weekend(d)]
         return weekends
-
-    def all_days_between(self, from_date, to_date, include_weekends=True):
-
-        f_date = util.validate_dtype(date=from_date)
-        t_date = util.validate_dtype(date=to_date)
-        num = f_date - t_date
-        number_of_days = abs(num.days)
-        all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1, number_of_days + 1)]
-        if include_weekends is False:
-            clean_dates = []
-            for d in all_dates_between:
-                if (d.weekday() != 5 and d.weekday() != 6):
-                    clean_dates.append(d)
-            all_dates_between = clean_dates
-        return all_dates_between
 
     def days_of_week(self, date, include_weekends=True):
 
@@ -64,3 +38,32 @@ class Days:
         start_date = datetime.datetime(date.year, 1, 1)
         end_date = datetime.datetime(date.year, 12, 31)
         return self.all_days_between(start_date, end_date, include_weekends)
+
+    @staticmethod
+    def get_the_day(date):
+        date = util.validate_dtype(date=date)
+        return date.strftime("%A")
+
+    @staticmethod
+    def is_weekend(date):
+        date = util.validate_dtype(date=date)
+        if date.weekday() == 5 or date.weekday() == 6:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def all_days_between(from_date, to_date, include_weekends=True):
+
+        f_date = util.validate_dtype(date=from_date)
+        t_date = util.validate_dtype(date=to_date)
+        num = f_date - t_date
+        number_of_days = abs(num.days)
+        all_dates_between = [f_date + datetime.timedelta(days=x) for x in range(1, number_of_days + 1)]
+        if include_weekends is False:
+            clean_dates = []
+            for d in all_dates_between:
+                if d.weekday() != 5 and d.weekday() != 6:
+                    clean_dates.append(d)
+            all_dates_between = clean_dates
+        return all_dates_between
